@@ -1,17 +1,124 @@
+
 from tkinter import * 
 import tkinter as tk
 from PIL import ImageTk, Image
 from tkinter import messagebox
-import pickle
-import io
 import mysql.connector
 from tkinter import scrolledtext
 from tkinter import ttk
 
 def services():
+    def viewworkshops():
+        WPage = Toplevel(MPage)
+        WPage.geometry('1000x1500')
+
+        main_frame=Frame(WPage)
+        main_frame.pack(fill=BOTH, expand=1)
+
+# Create A Canvas
+        my_canvas = Canvas(main_frame)
+        my_canvas.pack(side=LEFT, fill=BOTH, expand=1)
+
+# Add A Scrollbar To The Canvas
+        my_scrollbar = ttk.Scrollbar(main_frame, orient=VERTICAL, command=my_canvas.yview)
+        my_scrollbar.pack(side=RIGHT, fill=Y)
+
+# Configure The Canvas
+        my_canvas.configure(yscrollcommand=my_scrollbar.set)
+        my_canvas.bind('<Configure>', lambda e: my_canvas.configure(scrollregion = my_canvas.bbox("all")))
+
+# Create ANOTHER Frame INSIDE the Canvas
+        second_frame = Frame(my_canvas)
+
+# Add that New frame To a Window In The Canvas
+        my_canvas.create_window((0,0), window=second_frame, anchor="nw")
+
+        global image6
+        background5=Canvas(second_frame,width=1000,height=1500)
+        image6=ImageTk.PhotoImage(Image.open("220d4aa99d158cfff3ad66bdd1f3357b.jpg"))
+        background5.create_image(0,0,anchor='nw',image=image6)
+        background5.pack(expand=True,fill=BOTH)
+
+        WELCOME = Label(second_frame,text='''WELCOME TO THE WORKSHOPs PAGE
+Here, find yourself amongst like-minded thinkers who'll help you get through any
+problem! Talk and find new friends who'll join you hand-in-hand along with expert mentors
+to guide you through this journey!! ''',font=('Bahnschrift Condensed',18),bg='white',fg='black')
+        WELCOME.place(x=130,y=7)
+
+        ADDICTION_EXTINCTION=Label(second_frame,text=''' ADDICTION EXTINCTION - THE SIERRA CLUB
+
+ WHEN - EVERY SUNDAY AT 6 p.m.
+
+ Addiction Extinction is a nationwide program run by the Sierra Club. With the first program being held in 2001, they have been helping people of 
+ all age groups come out of addiction for over 20 years. One of the most popular discussion groups today, the Sierra Club and its program is 
+ mediated by highly trained professionals. Each group has about 10 to 15 people, making individual attention a key ascpect of this program.The 
+ program is held in all major cities every Sunday.''', justify=LEFT, font=('Bahnschrift Condensed',14),bg='white',fg='black', borderwidth=2, relief='solid')
+        ADDICTION_EXTINCTION.place(x=20,y=150)
+        AD_SEAT=Button(second_frame,text='Click For More Info',font=('Bahnschrift Condensed',14),bg='white',fg='black',borderwidth=2, relief="solid")
+        AD_SEAT.place(x=705,y=170)  
+
+        FEELING_AND_HEALING=Label(second_frame,text=''' FEELING AND HEALING - ARMY ASSOCIATION
+
+ WHEN - EVERY EVENING AT 4:30 p.m.
+
+ Do you have an experience that has been haunting you? Are you suffering from post-trauma? Well then join the veterans of our Army everyday at
+ 4:30 p.m. to learn how to overcome post trauma and deal with it. Based out of the Army Welfare Association in Bangalore, they conduct offline
+ as well as online sessions for those who are not living in Bangalore.''', justify=LEFT, font=('Bahnschrift Condensed',14),bg='white',fg='black', borderwidth=2, relief='solid')
+        FEELING_AND_HEALING.place(x=20,y=360)
+        FH_SEAT=Button(second_frame,text='Click For More Info',font=('Bahnschrift Condensed',14),bg='white',fg='black',borderwidth=2, relief="solid")
+        FH_SEAT.place(x=705,y=380) 
+        
+#CONFIGURE THE TEXT FOR ABSOLUT ANXIETY
+        ABSOLUT_ANXIETY=Label(second_frame,text=''' ABSOLUT ANXIETY - MENTAL || MESSAGE
+ 
+ WHEN - MONDAYS,WEDNESDAYS AND FRIDAYS FROM 6 TO 8 PM
+ 
+ AbolutAnxiety is a workshop designed just for the patients experiencing anxiety related issues. Group discussions and interactive sessions are 
+ designed to provide participants with the opportunity to increase their awareness on anxiety and how to overcome that illness. Held at RMA Hall 
+ in Indiranagar, this support groups now also holds online conferences for better access.''', justify=LEFT, font=('Bahnschrift Condensed',14),bg='white',fg='black', borderwidth=2, relief='solid')
+        ABSOLUT_ANXIETY.place(x=20,y=550)
+        AA_SEAT=Button(second_frame,text='Click For More Info',font=('Bahnschrift Condensed',14),bg='white',fg='black',borderwidth=2, relief="solid")
+        AA_SEAT.place(x=705,y=570) 
+
+        DAWN_OVER_DEPRESSION=Label(second_frame,text=''' DAWN OVER DEPRESSION - MENDING MINDS
+        
+ WHEN - EVERY SATURDAY AND SUNDAY FROM 5 TO 8 PM
+
+ DawnOverDepression is a workshop designed just for the patients experiencing depression and are not able to overcome depression. This 
+ workshop consists of the following activities such as group discussions, interactive session, virtual meetings with people who fought depression
+ in their past. This idea is designed to provide participants with the opportunity to increase their awareness of depression.''',justify=LEFT, font=('Bahnschrift Condensed',14),bg='white',fg='black', borderwidth=2, relief='solid')
+        DAWN_OVER_DEPRESSION.place(x=20,y=740)
+        DOD_SEAT=Button(second_frame,text='Click For More Info',font=('Bahnschrift Condensed',14),bg='white',fg='black',borderwidth=2, relief="solid")
+        DOD_SEAT.place(x=705,y=760) 
+
+        TATA_TRAUMA=Label(second_frame,text=''' TATA TRAUMA - STEPPING STONE HEALTH CENTRE
+ 
+ WHEN - 4 DAYS A WEEK, AT ANY SUITABLE TIME FOR 4 HOURS
+ 
+ Tata Trauma is a workshop that has been designed specifically for those patients who are suffering from post traumatical effects. The workshop
+ includes interactive sessions, speeches from specialized doctors and more to help participants in broadening their knowledge on
+ post trauma as well as how to overcome it.''',justify=LEFT, font=('Bahnschrift Condensed',14),bg='white',fg='black', borderwidth=2, relief='solid')
+        TATA_TRAUMA.place(x=20,y=930)
+        TT_SEAT=Button(second_frame,text='Click For More Info',font=('Bahnschrift Condensed',14),bg='white',fg='black',borderwidth=2, relief="solid")
+        TT_SEAT.place(x=705,y=950)
+
+        ADIOS_ADDICTION=Label(second_frame,text=''' ADIOS ADDICTION - MEDICAZONE
+ 
+ WHEN - 3 DAYS A WEEK, FOR 4 HOURS
+ 
+ Adios Addiction is a workshop that was born out of the thought to help those who wish to come out of of addiction. Whether the addiction may be
+ a behavioural aspect, a chemical aspect or anything else, we've got you covered. The workshop includes group discussions, interactive 
+ sessions, documentaries and more to allow participants an opportunity to widen their knowledge over addiction and conquer it.''',justify=LEFT, font=('Bahnschrift Condensed',14),bg='white',fg='black', borderwidth=2, relief='solid')
+        ADIOS_ADDICTION.place(x=20,y=1120)
+        ADD_SEAT=Button(second_frame,text='Click For More Info',font=('Bahnschrift Condensed',14),bg='white',fg='black',borderwidth=2, relief="solid")
+        ADD_SEAT.place(x=705,y=1140)
+    
+    
+    
+    
     def viewspecial():
         SPage = Toplevel(MPage)
-        SPage.geometry('1000x1000')
+        SPage.geometry('1000x1500')
 
         main_frame=Frame(SPage)
         main_frame.pack(fill=BOTH, expand=1)
@@ -35,8 +142,8 @@ def services():
         my_canvas.create_window((0,0), window=second_frame, anchor="nw")
 
         global image5
-        background4=Canvas(second_frame,width=6000,height=6000)
-        image5=ImageTk.PhotoImage(Image.open("istockphoto-1154943426-612x612.jpg"))
+        background4=Canvas(second_frame,width=1000,height=1500)
+        image5=ImageTk.PhotoImage(Image.open("220d4aa99d158cfff3ad66bdd1f3357b.jpg"))
         background4.create_image(0,0,anchor='nw',image=image5)
         background4.pack(expand=True,fill=BOTH)
 
@@ -46,11 +153,11 @@ them to heal you from the roots. Counter any problem in the best way possible
 What are you waiting for? GO EXPLORE! ''',font=('Bahnschrift Condensed',18),bg='white',fg='black')
         WELCOME.place(x=150,y=7)
 
-        VIJAY_GANESHA=Label(second_frame,text=''' DR. VIJAY GANESHAN - INSTITUTION OF MENTAL HEALTH
+        VIJAY_GANESHA=Label(second_frame,text=''' DR. VIJAY GANESHA - INSTITUTION OF MENTAL HEALTH
  QUALIFICATIONS - B.A in Psychology, M.A in Counselling Psychology and Social Psychology,
  PhD in Counselling Psychology
 
-  SPECIALISATION - ANXIETY
+ SPECIALISATION - ANXIETY
  
  Dr Vijay Ganesha has over 40 years of experience in helping patients deal with anxiety-related issues. He also authored the best-selling book named
  "Declutter Your Mind". He frequently conducts workshops in both India and abroad on anxiety and how to deal with it.''', justify=LEFT, font=('Bahnschrift Condensed',14),bg='white',fg='black', borderwidth=2, relief='solid')
@@ -58,24 +165,76 @@ What are you waiting for? GO EXPLORE! ''',font=('Bahnschrift Condensed',18),bg='
         VG_BOOK=Button(second_frame,text='Book An Appointment',font=('Bahnschrift Condensed',14),bg='white',fg='black',borderwidth=2, relief="solid")
         VG_BOOK.place(x=700,y=170)    
 
-        RADHIKA_RAMANATHAN=Label(second_frame,text='''RADHIKA RAMANATHAN - CAREFORYOU
-  QUALIFICATIONS - B.A. in Psychology, M.A in Developmental Psychology and Social Psychology,
-  PhD in Social Psychology
+        RADHIKA_RAMANATHAN=Label(second_frame,text=''' RADHIKA RAMANATHAN - CAREFORYOU
+ QUALIFICATIONS - B.A. in Psychology, M.A in Developmental Psychology and Social Psychology,
+ PhD in Social Psychology
 
-  SPECIALISATION - DEPRESSION
+ SPECIALISATION - DEPRESSION
 
-  Dr. Radhika Ramanathan is not a new name in the books. She is the host of the popular TV show "The Happy Lab", where she helps people overcome
-  depression by showing the power of happiness. She has helped over 2500 people both on and off the show. ''', justify=LEFT, font=('Bahnschrift Condensed',14),bg='white',fg='black', borderwidth=2, relief='solid' )
+ Dr. Radhika Ramanathan is not a new name in the books. She is the host of the popular TV show "The Happy Labs", where she helps people overcome
+ depression by showing the power of happiness. She has helped over 2500 people both on and off the show. ''', justify=LEFT, font=('Bahnschrift Condensed',14),bg='white',fg='black', borderwidth=2, relief='solid' )
         RADHIKA_RAMANATHAN.place(x=15,y=360)
         RR_BOOK=Button(second_frame,text='Book An Appointment',font=('Bahnschrift Condensed',14),bg='white',fg='black',borderwidth=2, relief="solid")
         RR_BOOK.place(x=700,y=380)
 
-    
-        
+        ANANYA_BAHRI = Label(second_frame,text=''' ANANYA BAHRI - OAK GROVE THERAPY CENTRE
+ QUALIFICATIONS - B.A in Psychology, M.A in Social Psychology, PhD in Social Psychology
+  
+ SPECIALISATION - DEPRESSION
+  
+ Dr Ananya Bahri has over 21 years of experience in helping patients overcome depression. She regularly conducts workshops in India. She also helps
+ over 150 people each year to come out of that phase let it be either online or offline consultations.''', justify=LEFT, font=('Bahnschrift Condensed',14),bg='white',fg='black',
+borderwidth=2, relief="solid")
+        ANANYA_BAHRI.place(x=15,y=570)
+        AB_BOOK=Button(second_frame,text='Book An Appointment',font=('Bahnschrift Condensed',14),bg='white',fg='black',borderwidth=2, relief="solid")
+        AB_BOOK.place(x=700,y=590)
+
+        DIYA_MORE=Label(second_frame,text=''' DR. DIYA MORE - A BETTER WAY THERAPY CENTRE
+ QUALIFICATIONS - B.A in Psychology, M.A in Counselling Psychology, PhD in Counselling
+ Psychology
+
+ SPECIALISATION - ANXIETY
+ 
+ Dr. Diya More has over 19 years of experience in helping patients overcome anxiety. She regularly visits countries like USA, UK, Australia etc to help
+ patients who are dealing with anxiety. She has helped over 1300 people by taking 2 weeks of regular counselling sessions with her clients to get to  
+ know more and more about their mental health/background, that makes it easy for her to help them get over this dreadful situation .''', justify=LEFT, font=('Bahnschrift Condensed',14),bg='white',fg='black',
+borderwidth=2, relief="solid")
+        DIYA_MORE.place(x=15,y=760)
+        DM_BOOK=Button(second_frame,text='Book An Appointment',font=('Bahnschrift Condensed',14),bg='white',fg='black',borderwidth=2, relief="solid")
+        DM_BOOK.place(x=700,y=780)
+
+        TARUN_MATTHEW=Label(second_frame,text=''' DR. TARUN MATTHEW - WELLBEING THERAPUTIC
+ QUALIFICATIONS - B.A in Psychology, M.A in Developmental Psychology, M.A in Organizational
+ Psychology, PhD. in Councelling Psychology
+ 
+ SPECIALISATION - POST TRAUMA
+ 
+ Dr. Tarun Matthew has over 25 years of experience in assisting more than 80000 patients suffering from post-trauma. He is the author of the book 
+ "Trampling Trauma" which educates people on how to come out of trauma. Dr. Tarun Matthew is also the receiver of the prestigious B.C Roy National
+ Award.''', justify=LEFT, font=("Bahnschrift Condensed",14),
+ bg="white", fg="black", borderwidth=2, relief="solid")
+
+        TARUN_MATTHEW.place(x=15, y=990)
+        TM_BOOK=Button(second_frame,text='Book An Appointment',font=('Bahnschrift Condensed',14),bg='white',fg='black',borderwidth=2, relief="solid")
+        TM_BOOK.place(x=700,y=1010)
+
+        KARIM_LOK=Label(second_frame,text=''' DR. KARIM LOK - NIMHANS
+ QUALIFICATIONS - B.A in Psychology, M.A in Social Psychology, PhD. in Social Psychology
+ 
+ SPECIALISATION - ADDICTION
+
+ Dr. Karim Lok is one of the most reputed doctors worldwide. He possesses over 25 years of experience in treating people with problems related to 
+ addiction. Dr. Karim Lok frequently travels abroad to countries such as USA, UK and Australia to lecture to medical aspirants and also provides aid 
+ to victims of addiction. Dr. Karim Lok records consulting over 150000 patients till date and also conducts regular seminars to educate 
+ people about the negative effects of addiction and how to overcome addiction.''',justify=LEFT, font=("Bahnschrift Condensed",14), bg="white", fg="black", borderwidth=2, relief="solid")
+
+        KARIM_LOK.place(x=15,y=1220)
+        KL_BOOK = Button(second_frame,text='Book An Appointment',font=('Bahnschrift Condensed',14),bg='white',fg='black',borderwidth=2, relief="solid")
+        KL_BOOK.place(x=700, y=1240)
 
     def viewgeneral():
         GDPage=Toplevel(MPage)
-        GDPage.geometry('1000x1000')
+        GDPage.geometry('1000x900')
         
 
         main_frame=Frame(GDPage)
@@ -100,7 +259,7 @@ What are you waiting for? GO EXPLORE! ''',font=('Bahnschrift Condensed',18),bg='
         my_canvas.create_window((0,0), window=second_frame, anchor="nw")
 
         global image4
-        background3=Canvas(second_frame,width=6000,height=6000)
+        background3=Canvas(second_frame,width=1000,height=900)
         image4=ImageTk.PhotoImage(Image.open("istockphoto-1154943426-612x612.jpg"))
         background3.create_image(0,0,anchor='nw',image=image4)
         background3.pack(expand=True,fill=BOTH)
@@ -133,6 +292,27 @@ What are you waiting for? GO EXPLORE! ''',font=('Bahnschrift Condensed',18),bg='
         UM_BOOK = Button (second_frame,text='Book An Appointment',font=('Bahnschrift Condensed',14),bg='white',fg='black',borderwidth=2, relief="solid")
         UM_BOOK.place(x=700,y=350)
 
+        JASMIN_RAJU=Label(second_frame,text = ''' DR JASMIN RAJU - TIGER HEALTH
+ QUALIFICATIONS - B.A in Psychology, M.A in Developmental Psychology and Organizational Psychology,
+ PhD in Developmental Psychology
+        
+ Dr Jasmin Raju has over 25 years of experience in the field of psychology and has collabrated with several big companies on how to promote better 
+ mental health amongst the employees. She is currently helping over 1500 people in Bangalore alone in conquering a diversity of mental issues. She 
+ has been awarded several accolades for her tremendous feat in helping people.''',justify=LEFT, font=('Bahnschrift Condensed',14),bg='white',fg='black', borderwidth=2, relief='solid')
+        JASMIN_RAJU.place(x=15,y=510)
+        JS_BOOK = Button (second_frame,text='Book An Appointment',font=('Bahnschrift Condensed',14),bg='white',fg='black',borderwidth=2, relief="solid")
+        JS_BOOK.place(x=700,y=530)
+
+        ANAND_RADHAKRISHAN=Label(second_frame,text = ''' ANAND RADHAKRISHNAN - TALK TECHNIQUES
+ QUALIFICATIONS - B.A in Psychology, M.A in Human Factors Psychology and Counselling Psychology
+
+ Anand Radhakrishnan is a reputed therapist who has been associated with Talk Techniques, an internationally reputed centre, for over 15 years. He 
+ held high positions in several other organisations as the Head Therapist. He has helped well over 7000 patients so far and
+ regularly holds workshops for group interactions as well.''',justify=LEFT, font=('Bahnschrift Condensed',14),bg='white',fg='black', borderwidth=2, relief='solid')
+        ANAND_RADHAKRISHAN.place(x=15,y=690)
+        AR_BOOK = Button (second_frame,text='Book An Appointment',font=('Bahnschrift Condensed',14),bg='white',fg='black',borderwidth=2, relief="solid")
+        AR_BOOK.place(x=700,y=710)
+        
 
 
     CPage=Toplevel(MPage)
@@ -140,7 +320,7 @@ What are you waiting for? GO EXPLORE! ''',font=('Bahnschrift Condensed',18),bg='
 
     global image3
     background2=Canvas(CPage,width=6000,height=600)
-    image3=ImageTk.PhotoImage(Image.open("istockphoto-1154943426-612x612.jpg"))
+    image3=ImageTk.PhotoImage(Image.open("220d4aa99d158cfff3ad66bdd1f3357b.jpg"))
     background2.create_image(0,0,anchor='nw',image=image3)
     background2.pack(expand=True,fill=BOTH)
 
@@ -170,7 +350,7 @@ information  on workshops and discussions right here. Click
 the button below and find out when and where exactly!!!''',font=('Bahnschrift Condensed',18),bg='white',fg='black')
     INFORMAL.place(x=500,y=170)
 
-    WORKSHOPS=Button(CPage,text='SHOW ME THE WORKSHOPS',font=('Bahnschrift Condensed',14),bg='white',fg='black')
+    WORKSHOPS=Button(CPage,text='SHOW ME THE WORKSHOPS',font=('Bahnschrift Condensed',14),bg='white',fg='black', command = viewworkshops)
     WORKSHOPS.place(x=650,y=320)
 
 
