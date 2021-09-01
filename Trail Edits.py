@@ -242,6 +242,9 @@ def specialdoctors():
     ananyaBahriButton.bind("<Leave>",button_hover_leave5)
     radhikaRamanathanButton.bind("<Enter>",button_hover6)
     radhikaRamanathanButton.bind("<Leave>",button_hover_leave6)
+    
+def generalDoctorsConfirmation():
+    GDCPage=Toplevel(MPage)
 
 def generaldoctors():
     GDPage=Toplevel(MPage)
