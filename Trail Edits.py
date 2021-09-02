@@ -7,6 +7,11 @@ from tkinter import messagebox
 from tkinter import ttk
 from tkcalendar import *
 from functools import partial
+fullName=' '
+def nameForInvoice(firstname,lastname):
+    global fullName
+    fullName=firstname + ' ' + lastname
+
 def workshopInvoice(recievedValue):
     WIPage=Toplevel(MPage)
     background=Canvas(WIPage,width=600,height=600)
