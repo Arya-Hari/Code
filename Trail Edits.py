@@ -7,7 +7,16 @@ from tkinter import messagebox
 from tkinter import ttk
 from tkcalendar import *
 from functools import partial
+fullName=' '
+def nameForInvoice(firstname,lastname):
+    global fullName
+    fullName=firstname + ' ' + lastname
+
 def workshopInvoice(recievedValue):
+    Name=fullName.title()
+    listForDate=date.split('/')
+    finalDate=listForDate[1]+'-'+listForDate[0]+'-'+listForDate[2]
+    price=(1499*(2/100))+1499+((10/100)*1499)
     WIPage=Toplevel(MPage)
     background=Canvas(WIPage,width=600,height=600)
     image=ImageTk.PhotoImage(Image.open("Invoice Page.jpg"))
@@ -16,39 +25,52 @@ def workshopInvoice(recievedValue):
     background.create_image(0,0,anchor='nw',image=image)
     background.pack(expand=True,fill=BOTH)
     WIPage.geometry('600x600')
+    nameLabel=Label(WIPage, text=Name, font=('Bahnschrift Condensed',22),bg='black',fg='gold')
+    nameLabel.place(x=350,y=180)
+    workshopLabel=Label(WIPage,text=recievedValue,font=('Bahnschrift Condensed',22),bg='black',fg='gold')
+    workshopLabel.place(x=325,y=262)
+    priceLabel=Label(WIPage,text=price,font=('Bahnschrift Condensed',22),bg='black',fg='gold')
+    priceLabel.place(x=375,y=342)
+    dateLabel=Label(WIPage,text=finalDate,font=('Bahnschrift Condensed',22),bg='black',fg='gold')
+    dateLabel.place(x=375,y=424)
     
 
 def workshopConfirmation():
+    date=''
+    def grab_date():
+         global date
+         date=cal.get_date()
     def selected():
         a=var.get()
         submit=ImageTk.PhotoImage(Image.open("Submit Button.jpg"))
         submitButtonLabel=Label(image=submit)
         submitButtonLabel.image=submit
         submitButton=Button(WCPage,image=submit,borderwidth=0,highlightthickness=0,command=partial(workshopInvoice,a))
-        submitButton.place(x=380,y=520)
+        submitButton.place(x=230,y=620)
+        grab_date()
     WCPage=Toplevel(MPage)
-    background=Canvas(WCPage,width=600,height=600)
-    image=ImageTk.PhotoImage(Image.open("Confirmation Page.jpg"))
+    background=Canvas(WCPage,width=600,height=700)
+    image=ImageTk.PhotoImage(Image.open("Workshop Confirmation Page.jpg"))
     label1=Label(image=image)
     label1.image=image
     background.create_image(0,0,anchor='nw',image=image)
     background.pack(expand=True,fill=BOTH)
-    WCPage.geometry('600x600')
+    WCPage.geometry('600x700')
+    cal=Calendar(WCPage,selectmode="day",year=2021,month=8,day=22)
+    cal.place(x=25,y=310)
     var=tk.StringVar()
     ade=Radiobutton(WCPage,text='Addiction Extinction - Rs1499/session',font=('Bahnschrift Condensed',14),variable=var,value='Addiction Extinction',command=selected,tristatevalue=0,bg="black",fg="gold")
-    ade.place(x=15,y=280)
-    aa=Radiobutton(WCPage,text='Absolut Anxiety - Rs1499/session',font=('Bahnschrift Condensed',14),variable=var,value='Absolute Anxiety',command=selected,tristatevalue=0,bg="black",fg="gold")
-    aa.place(x=15,y=330)
+    ade.place(x=307,y=280)
+    aa=Radiobutton(WCPage,text='Absolut Anxiety - Rs1499/session',font=('Bahnschrift Condensed',14),variable=var,value='Absolut Anxiety',command=selected,tristatevalue=0,bg="black",fg="gold")
+    aa.place(x=307,y=330)
     at=Radiobutton(WCPage,text='Against Trauma- Rs1499/session',font=('Bahnschrift Condensed',14),variable=var,value='Against Trauma',command=selected,tristatevalue=0,bg="black",fg="gold")
-    at.place(x=15,y=380)
+    at.place(x=307,y=380)
     dod=Radiobutton(WCPage,text='Dawn Over Depression- Rs1499/session',font=('Bahnschrift Condensed',14),variable=var,value='Dawn Over Depression',command=selected,tristatevalue=0,bg="black",fg="gold")
-    dod.place(x=15,y=430)
+    dod.place(x=307,y=430)
     fah=Radiobutton(WCPage,text='Feeling and Healing - Rs1499/session',font=('Bahnschrift Condensed',14),variable=var,value='Feeling and Healing',command=selected,tristatevalue=0,bg="black",fg="gold")
-    fah.place(x=15,y=480)
+    fah.place(x=307,y=480)
     ada=Radiobutton(WCPage,text='Adios Addiction - Rs1499/session',font=('Bahnschrift Condensed',14),variable=var,value='Adios Addiction',command=selected,tristatevalue=0,bg="black",fg="gold")
-    ada.place(x=15,y=530)
-    cal=Calendar(WCPage,selectmode="day",year=2021,month=8,day=22)
-    cal.place(x=317,y=300)
+    ada.place(x=307,y=530)
     
 
 def workshop():
