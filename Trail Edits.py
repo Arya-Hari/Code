@@ -149,6 +149,7 @@ def workshop():
    
 def specialistsConfirmation():
     SCPage=Toplevel(MPage)
+    SCPage.geometery("600x600")
 
 def specialdoctors():
     SDPage=Toplevel(MPage)
