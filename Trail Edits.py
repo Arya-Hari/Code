@@ -7,6 +7,26 @@ from tkinter import messagebox
 from tkinter import ttk
 from tkcalendar import *
 from functools import partial
+def endProject():
+    MPage.destroy()
+
+def logout():
+    LOPage=Toplevel(MPage)
+    background=Canvas(LOPage,width=600,height=600)
+    image=ImageTk.PhotoImage(Image.open("Logout Page.jpg"))
+    label1=Label(image=image)
+    label1.image=image
+    background.create_image(0,0,anchor='nw',image=image)
+    background.pack(expand=True,fill=BOTH)
+    LOPage.geometry('600x600')
+    back=ImageTk.PhotoImage(Image.open("Back-Button-Logo.jpg"))
+    backButtonLabel=Label(image=back)
+    backButtonLabel.image=back
+    backButton=Button(LOPage,image=back,borderwidth=0,highlightthickness=0)
+    backButton.place(x=450,y=15)
+    decisionButton=Button(LOPage,text="YES - CONFIRM LOGOUT",font=('Bahnschrift Condensed',18),bg='white',fg='red',command=endProject, borderwidth=1,relief="solid")
+    decisionButton.place(x=270,y=510)
+
 fullName=' '
 def nameForInvoice(firstname,lastname):
     global fullName
@@ -33,7 +53,8 @@ def workshopInvoice(recievedValue):
     priceLabel.place(x=375,y=342)
     dateLabel=Label(WIPage,text=finalDate,font=('Bahnschrift Condensed',22),bg='black',fg='gold')
     dateLabel.place(x=375,y=424)
-    
+    done=Button(WIPage, text="Done",font=('Bahnschrift Condensed',18),bg='black',fg='gold',command=logout)
+    done.place(x=265, y=478)
 
 def workshopConfirmation():
     date=''
@@ -392,6 +413,27 @@ def services():
     specialDoctorsButton.bind("<Leave>",button_hover_leave2)
     workshopsButton.bind("<Enter>",button_hover3)
     workshopsButton.bind("<Leave>",button_hover_leave3)
+    
+    
+def aboutUs():
+    AUPage=Toplevel(MPage)
+    background=Canvas(AUPage,width=600,height=600)
+    image=ImageTk.PhotoImage(Image.open("About Us Page.jpg"))
+    label1=Label(image=image)
+    label1.image=image
+    background.create_image(0,0,anchor='nw',image=image)
+    background.pack(expand=True,fill=BOTH)
+    AUPage.geometry('600x600')
+    back=ImageTk.PhotoImage(Image.open("Back-Button-Logo.jpg"))
+    backButtonLabel=Label(image=back)
+    backButtonLabel.image=back
+    backButton=Button(AUPage,image=back,borderwidth=0,highlightthickness=0)
+    backButton.place(x=450,y=15)
+    user=ImageTk.PhotoImage(Image.open("User Logo.jpg"))
+    userButtonLabel=Label(image=user)
+    userButtonLabel.image=user
+    userButton=Button(AUPage,image=user,borderwidth=0,highlightthickness=0)
+    userButton.place(x=550,y=8)
 
 
 def welcome():
@@ -415,6 +457,8 @@ def welcome():
     userButton.place(x=550,y=8)
     continueButton=Button(WPage, text="CONTINUE",font=('Bahnschrift Condensed',24),bg='black',fg='gold',borderwidth=0,command=services)
     continueButton.place(x=240,y=400)
+    aboutUsButton=Button(WPage,text='ABOUT US',font=('Bahnschrift Condensed',15),bg='black',fg='gold',borderwidth=0,command=aboutUs)
+    aboutUsButton.place(x=50,y=530)
 
 def register():
     def enter():
