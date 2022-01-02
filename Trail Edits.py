@@ -193,9 +193,7 @@ def workshop():
     adiosAddictionButton.bind("<Leave>",button_hover_leave5)
     feelingAndHealingButton.bind("<Enter>",button_hover6)
     feelingAndHealingButton.bind("<Leave>",button_hover_leave6)
-    
-def specialistsConfirmation():
-    def specialistsInvoice():
+
 
 #Special Doctors Page
 def specialdoctors():
@@ -294,8 +292,7 @@ def specialdoctors():
     radhikaRamanathanButton.bind("<Enter>",button_hover6)
     radhikaRamanathanButton.bind("<Leave>",button_hover_leave6)
     
-def generalDoctorsConfirmation():
-    def generalDoctorsInvoice():
+
 
 #General Doctors Page
 def generaldoctors():
