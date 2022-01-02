@@ -148,6 +148,7 @@ def workshop():
     feelingAndHealingButton.bind("<Leave>",button_hover_leave6)
    
 def specialistsConfirmation():
+    def specialistsInvoice():
     SCPage=Toplevel(MPage)
     SCPage.geometry("600x600")
 
