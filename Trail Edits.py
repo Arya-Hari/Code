@@ -244,6 +244,7 @@ def specialdoctors():
     radhikaRamanathanButton.bind("<Leave>",button_hover_leave6)
     
 def generalDoctorsConfirmation():
+    def generalDoctorsInvoice():
     GDCPage=Toplevel(MPage)
 
 def generaldoctors():
