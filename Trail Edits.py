@@ -164,7 +164,7 @@ def specialConfirmation():
         price="₹"+str((cost*(2/100))+cost+((10/100)*cost))
         SIPage=Toplevel(MPage)
         background=Canvas(SIPage,width=600,height=600)
-        image=ImageTk.PhotoImage(Image.open("Specialist Invoice Page.jpg"))
+        image=ImageTk.PhotoImage(Image.open("Invoice Page.jpg"))
         label1=Label(image=image)
         label1.image=image
         background.create_image(0,0,anchor='nw',image=image)
