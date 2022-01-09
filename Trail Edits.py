@@ -7,52 +7,105 @@ from tkinter import messagebox
 from tkinter import ttk
 from tkcalendar import *
 from functools import partial
+
 import random 
 
 def workshopInvoice(recievedValue):
     WIPage=Toplevel(MPage)
     background=Canvas(WIPage,width=600,height=600)
     image=ImageTk.PhotoImage(Image.open("Invoice Page.jpg"))
+=======
+import random
+
+def endProject():
+    MPage.destroy()
+
+#Logout Page
+def logout():
+    LOPage=Toplevel(MPage)
+    background=Canvas(LOPage,width=600,height=600)
+    image=ImageTk.PhotoImage(Image.open("Logout Page.jpg"))
     label1=Label(image=image)
     label1.image=image
     background.create_image(0,0,anchor='nw',image=image)
     background.pack(expand=True,fill=BOTH)
-    WIPage.geometry('600x600')
-    
+    LOPage.geometry('600x600')
+    back=ImageTk.PhotoImage(Image.open("Back-Button-Logo.jpg"))
+    backButtonLabel=Label(image=back)
+    backButtonLabel.image=back
+    backButton=Button(LOPage,image=back,borderwidth=0,highlightthickness=0)
+    backButton.place(x=450,y=15)
+    decisionButton=Button(LOPage,text="YES - CONFIRM LOGOUT",font=('Bahnschrift Condensed',18),bg='white',fg='red',command=endProject, borderwidth=1,relief="solid")
+    decisionButton.place(x=270,y=510)
 
+#Workshop Confirmation Page   
 def workshopConfirmation():
+    def workshopInvoice(recievedValue):
+        Name=fullName.title()
+        def grab_date():
+            date=cal.get_date()
+            return date
+        date=grab_date()
+        listForDate=date.split('/')
+        finalDate=listForDate[1]+'-'+listForDate[0]+'-'+listForDate[2]
+        price=(1499*(2/100))+1499+((10/100)*1499)
+        WIPage=Toplevel(MPage)
+        background=Canvas(WIPage,width=600,height=600)
+        image=ImageTk.PhotoImage(Image.open("Invoice Page.jpg"))
+        label1=Label(image=image)
+        label1.image=image
+        background.create_image(0,0,anchor='nw',image=image)
+        background.pack(expand=True,fill=BOTH)
+        WIPage.geometry('600x600')
+        nameLabel=Label(WIPage, text=Name, font=('Bahnschrift Condensed',22),bg='black',fg='gold')
+        nameLabel.place(x=350,y=180)
+        workshopLabel=Label(WIPage,text=recievedValue,font=('Bahnschrift Condensed',22),bg='black',fg='gold')
+        workshopLabel.place(x=325,y=262)
+        priceLabel=Label(WIPage,text=price,font=('Bahnschrift Condensed',22),bg='black',fg='gold')
+        priceLabel.place(x=375,y=342)
+        dateLabel=Label(WIPage,text=finalDate,font=('Bahnschrift Condensed',22),bg='black',fg='gold')
+        dateLabel.place(x=375,y=424)
+        done=Button(WIPage, text="Done",font=('Bahnschrift Condensed',18),bg='black',fg='gold',command=logout)
+        done.place(x=265, y=478)
+        invoiceNumber=Label(WIPage,text='Invoice No. : '+str(random.randint(0,10000000)),font=('Bahnschrift Condensed',16),bg='black',fg='gold')
+        invoiceNumber.place(x=420, y=20)
     def selected():
         a=var.get()
         submit=ImageTk.PhotoImage(Image.open("Submit Button.jpg"))
         submitButtonLabel=Label(image=submit)
         submitButtonLabel.image=submit
         submitButton=Button(WCPage,image=submit,borderwidth=0,highlightthickness=0,command=partial(workshopInvoice,a))
-        submitButton.place(x=380,y=520)
+        submitButton.place(x=230,y=620)
     WCPage=Toplevel(MPage)
-    background=Canvas(WCPage,width=600,height=600)
-    image=ImageTk.PhotoImage(Image.open("Confirmation Page.jpg"))
+    background=Canvas(WCPage,width=600,height=700)
+    image=ImageTk.PhotoImage(Image.open("Workshop Confirmation Page.jpg"))
     label1=Label(image=image)
     label1.image=image
     background.create_image(0,0,anchor='nw',image=image)
     background.pack(expand=True,fill=BOTH)
-    WCPage.geometry('600x600')
+    WCPage.geometry('600x700')
+    cal=Calendar(WCPage,selectmode="day",year=2021,month=8,day=22)
+    cal.place(x=25,y=310)
     var=tk.StringVar()
     ade=Radiobutton(WCPage,text='Addiction Extinction - Rs1499/session',font=('Bahnschrift Condensed',14),variable=var,value='Addiction Extinction',command=selected,tristatevalue=0,bg="black",fg="gold")
-    ade.place(x=15,y=280)
-    aa=Radiobutton(WCPage,text='Absolut Anxiety - Rs1499/session',font=('Bahnschrift Condensed',14),variable=var,value='Absolute Anxiety',command=selected,tristatevalue=0,bg="black",fg="gold")
-    aa.place(x=15,y=330)
+    ade.place(x=307,y=280)
+    aa=Radiobutton(WCPage,text='Absolut Anxiety - Rs1499/session',font=('Bahnschrift Condensed',14),variable=var,value='Absolut Anxiety',command=selected,tristatevalue=0,bg="black",fg="gold")
+    aa.place(x=307,y=330)
     at=Radiobutton(WCPage,text='Against Trauma- Rs1499/session',font=('Bahnschrift Condensed',14),variable=var,value='Against Trauma',command=selected,tristatevalue=0,bg="black",fg="gold")
-    at.place(x=15,y=380)
+    at.place(x=307,y=380)
     dod=Radiobutton(WCPage,text='Dawn Over Depression- Rs1499/session',font=('Bahnschrift Condensed',14),variable=var,value='Dawn Over Depression',command=selected,tristatevalue=0,bg="black",fg="gold")
-    dod.place(x=15,y=430)
+    dod.place(x=307,y=430)
     fah=Radiobutton(WCPage,text='Feeling and Healing - Rs1499/session',font=('Bahnschrift Condensed',14),variable=var,value='Feeling and Healing',command=selected,tristatevalue=0,bg="black",fg="gold")
-    fah.place(x=15,y=480)
+    fah.place(x=307,y=480)
     ada=Radiobutton(WCPage,text='Adios Addiction - Rs1499/session',font=('Bahnschrift Condensed',14),variable=var,value='Adios Addiction',command=selected,tristatevalue=0,bg="black",fg="gold")
-    ada.place(x=15,y=530)
-    cal=Calendar(WCPage,selectmode="day",year=2021,month=8,day=22)
-    cal.place(x=317,y=300)
-    
+    ada.place(x=307,y=530)
 
+fullName=' '
+def nameForInvoice(firstname,lastname):
+    global fullName
+    fullName=firstname + ' ' + lastname
+    
+#Workshop Page
 def workshop():
     WPage=Toplevel(MPage)
     main_frame=Frame(WPage)
@@ -214,6 +267,8 @@ def specialConfirmation():
     rr.place(x=313,y=530)
 
 
+
+#Special Doctors Page
 def specialdoctors():
     SDPage=Toplevel(MPage)
     main_frame=Frame(SDPage)
@@ -309,7 +364,10 @@ def specialdoctors():
     ananyaBahriButton.bind("<Leave>",button_hover_leave5)
     radhikaRamanathanButton.bind("<Enter>",button_hover6)
     radhikaRamanathanButton.bind("<Leave>",button_hover_leave6)
+    
 
+
+#General Doctors Page
 def generaldoctors():
     GDPage=Toplevel(MPage)
     main_frame=Frame(GDPage)
@@ -384,7 +442,7 @@ def generaldoctors():
     anandRadhakishanButton.bind("<Enter>",button_hover4)
     anandRadhakishanButton.bind("<Leave>",button_hover_leave4)
 
-
+#Available Services Page
 def services():
     SPage=Toplevel(MPage)
     background=Canvas(SPage,width=600,height=600)
@@ -438,7 +496,28 @@ def services():
     workshopsButton.bind("<Enter>",button_hover3)
     workshopsButton.bind("<Leave>",button_hover_leave3)
 
+#About Us Page
+def aboutUs():
+    AUPage=Toplevel(MPage)
+    background=Canvas(AUPage,width=600,height=600)
+    image=ImageTk.PhotoImage(Image.open("About Us Page.jpg"))
+    label1=Label(image=image)
+    label1.image=image
+    background.create_image(0,0,anchor='nw',image=image)
+    background.pack(expand=True,fill=BOTH)
+    AUPage.geometry('600x600')
+    back=ImageTk.PhotoImage(Image.open("Back-Button-Logo.jpg"))
+    backButtonLabel=Label(image=back)
+    backButtonLabel.image=back
+    backButton=Button(AUPage,image=back,borderwidth=0,highlightthickness=0)
+    backButton.place(x=450,y=15)
+    user=ImageTk.PhotoImage(Image.open("User Logo.jpg"))
+    userButtonLabel=Label(image=user)
+    userButtonLabel.image=user
+    userButton=Button(AUPage,image=user,borderwidth=0,highlightthickness=0)
+    userButton.place(x=550,y=8)
 
+#Welcome Page
 def welcome():
     WPage=Toplevel(MPage)
     background=Canvas(WPage,width=600,height=600)
@@ -460,7 +539,10 @@ def welcome():
     userButton.place(x=550,y=8)
     continueButton=Button(WPage, text="CONTINUE",font=('Bahnschrift Condensed',24),bg='black',fg='gold',borderwidth=0,command=services)
     continueButton.place(x=240,y=400)
+    aboutUsButton=Button(WPage,text='ABOUT US',font=('Bahnschrift Condensed',15),bg='black',fg='gold',borderwidth=0,command=aboutUs)
+    aboutUsButton.place(x=50,y=530)
 
+#Register Page
 def register():
     def enter():
         usid=0
@@ -471,7 +553,6 @@ def register():
                                          database='mindcology',
                                          user='root',
                                          password='12ammu34')
-
         sql_select_Query = "select * from userinfo"
         cursor = connection.cursor()
         cursor.execute(sql_select_Query)
@@ -490,10 +571,13 @@ def register():
                 sql = "INSERT INTO userinfo (FIRSTNAME, LASTNAME, USERNAME, PASSWORD) VALUES (%s, %s,%s,%s)"
                 val = (firstname.get(), lastname.get(),username.get(),password.get())
                 mycursor.execute(sql, val)
+                sql2="INSERT INTO mailing_list (FIRSTNAME, LASTNAME, EMAIL) VALUES (%s, %s,%s)"
+                val2=(firstname.get(),lastname.get(),email.get())
+                mycursor.execute(sql2, val2)
                 mydb.commit()
                 messagebox.showinfo("Congrats","Registration Successfull")
                 welcome()
-    #Register Page Code
+                nameForInvoice(firstname.get(),lastname.get())
     large_font=('Bahnschrift Condensed',20)
     RPage=Toplevel(MPage)
     background=Canvas(RPage,width=600,height=600)
@@ -537,8 +621,12 @@ def register():
     Allowance=Checkbutton(RPage,text ='By checking this, you agree to our Terms and Conditions and shall be added to our Mailing List',font=('Bahnschrift Condensed',12),bg='white',fg='black',variable=v)
     Allowance.place(x=10,y=570)
 
+#Login Page
 def login():
     def entry():
+        error=0
+        firstnameSend=''
+        lastnameSend=''
         connection = mysql.connector.connect(
                                          database='mindcology',
                                          user='root',
@@ -550,10 +638,16 @@ def login():
         records = cursor.fetchall()
         for row in records:
             if row[2] != username.get() or row[3]!=password.get():
-                messagebox.showinfo('Error','Username or Password  Incorrect')
+                continue
             else:
-                welcome()
-    #Login Page
+                firstnameSend=row[0]
+                lastnameSend=row[1]
+                break
+        if firstnameSend=='' or lastnameSend=='':
+            messagebox.showinfo('Error','Username or Password  Incorrect')
+        else:
+            welcome()
+            nameForInvoice(firstnameSend,lastnameSend)
     large_font=('Bahnschrift Condensed',20)
     LPage=Toplevel(MPage)
     background=Canvas(LPage,width=600,height=600)
@@ -576,7 +670,7 @@ def login():
     username=Entry(LPage,font=large_font,bg="black",fg="white",width=24,insertbackground="white")
     username.place(x=250,y=233)
     username.bind("<Return>",entry)
-    password=Entry(LPage,font=large_font,bg="black",fg="white",width=24,insertbackground="white")
+    password=Entry(LPage,font=large_font,bg="black",fg="white",width=24,insertbackground="white",show="*")
     password.place(x=250,y=344)
     password.bind("Return",entry)
     submit=ImageTk.PhotoImage(Image.open("Submit Button.jpg"))
@@ -585,7 +679,7 @@ def login():
     submitButton=Button(LPage,image=submit,borderwidth=0,highlightthickness=0,command=entry)
     submitButton.place(x=235,y=470)
 
-
+#Main Page
 MPage=tk.Tk()
 background=Canvas(MPage,width=600,height=338)
 image=ImageTk.PhotoImage(Image.open("Main-Page-Background.jpg"))
@@ -599,5 +693,3 @@ Login.place(x=195, y=345)
 Register=Button(MPage,text='Register Now',font=('Bahnschrift Condensed',16),bg='white',fg='black',borderwidth=2, relief="solid",command=register)
 Register.place(x=295, y=345)
 MPage.mainloop()
-
-
