@@ -194,6 +194,69 @@ def workshop():
     feelingAndHealingButton.bind("<Enter>",button_hover6)
     feelingAndHealingButton.bind("<Leave>",button_hover_leave6)
 
+#Special Doctors Confirmation Page
+def specialConfirmation():
+    def specialInvoice(recievedValue):
+        Name=fullName.title()
+        a=recievedValue.split(", ₹")
+        cost=int(a[1])
+        def grab_date():
+            date=cal.get_date()
+            return date
+        date=grab_date()
+        listForDate=date.split('/')
+        finalDate=listForDate[1]+'-'+listForDate[0]+'-'+listForDate[2]
+        price="₹"+str((cost*(2/100))+cost+((10/100)*cost))
+        SIPage=Toplevel(MPage)
+        background=Canvas(SIPage,width=600,height=600)
+        image=ImageTk.PhotoImage(Image.open("Invoice Page.jpg"))
+        label1=Label(image=image)
+        label1.image=image
+        background.create_image(0,0,anchor='nw',image=image)
+        background.pack(expand=True,fill=BOTH)
+        SIPage.geometry('600x600')
+        nameLabel=Label(SIPage, text=Name,width=21,font=('Bahnschrift Condensed',20),bg='black',fg='gold')
+        nameLabel.place(x=305,y=180)
+        specialLabel=Label(SIPage,text=recievedValue,width=21,font=('Bahnschrift Condensed',20),bg='black',fg='gold')
+        specialLabel.place(x=305,y=262)
+        priceLabel=Label(SIPage,text=price,width=21,font=('Bahnschrift Condensed',20),bg='black',fg='gold')
+        priceLabel.place(x=305,y=342)
+        dateLabel=Label(SIPage,text=finalDate,font=('Bahnschrift Condensed',22),bg='black',fg='gold')
+        dateLabel.place(x=375,y=424)
+        done=Button(SIPage, text="Done",font=('Bahnschrift Condensed',18),bg='black',fg='gold',command=logout)
+        done.place(x=265, y=480)
+        invoiceNumber=Label(SIPage,text='Invoice No. : '+str(random.randint(0,10000000)),font=('Bahnschrift Condensed',16),bg='black',fg='gold')
+        invoiceNumber.place(x=420, y=20)
+    def selected():
+        a=var.get()
+        submit=ImageTk.PhotoImage(Image.open("Submit Button.jpg"))
+        submitButtonLabel=Label(image=submit)
+        submitButtonLabel.image=submit
+        submitButton=Button(SCPage,image=submit,borderwidth=0,highlightthickness=0,command=partial(specialInvoice,a))
+        submitButton.place(x=230,y=620)
+    SCPage=Toplevel(MPage)
+    background=Canvas(SCPage,width=600,height=700)
+    image=ImageTk.PhotoImage(Image.open("Confirmation Page.jpg"))
+    label1=Label(image=image)
+    label1.image=image
+    background.create_image(0,0,anchor='nw',image=image)
+    background.pack(expand=True,fill=BOTH)
+    SCPage.geometry('600x700')
+    cal=Calendar(SCPage,selectmode="day",year=2022,month=8,day=22)
+    cal.place(x=25,y=310)
+    var=tk.StringVar()
+    dm=Radiobutton(SCPage,text='Diya More-Rs2199/session',font=('Bahnschrift Condensed',16),variable=var,value='Diya More, ₹2199',command=selected,tristatevalue=0,bg="black",fg="gold")
+    dm.place(x=315,y=280)
+    tm=Radiobutton(SCPage,text='Tarun Matthew-Rs2499/session',font=('Bahnschrift Condensed',16),variable=var,value='Tarun Matthew, ₹2499',command=selected,tristatevalue=0,bg="black",fg="gold")
+    tm.place(x=315,y=330)
+    kl=Radiobutton(SCPage,text='Dr. Karim Lok-Rs2299/session',font=('Bahnschrift Condensed',16),variable=var,value='Dr. Karim Lok, ₹2299',command=selected,tristatevalue=0,bg="black",fg="gold")
+    kl.place(x=315,y=380)
+    vg=Radiobutton(SCPage,text='Vijay Ganeshan-Rs2399/session',font=('Bahnschrift Condensed',16),variable=var,value='Vijay Ganeshan, ₹2399',command=selected,tristatevalue=0,bg="black",fg="gold")
+    vg.place(x=315,y=430)
+    ab=Radiobutton(SCPage,text='Ananya Bahri-Rs1999/session',font=('Bahnschrift Condensed',16),variable=var,value='Ananya Bahri, ₹1999',command=selected,tristatevalue=0,bg="black",fg="gold")
+    ab.place(x=315,y=480)
+    rr=Radiobutton(SCPage,text='Radhika Ramanathan-Rs2399/session',font=('Bahnschrift Condensed',15),variable=var,value='Radhika Ramanathan, ₹2399',command=selected,tristatevalue=0,bg="black",fg="gold")
+    rr.place(x=313,y=530)
 
 #Special Doctors Page
 def specialdoctors():
@@ -252,32 +315,32 @@ def specialdoctors():
     diyaMore=ImageTk.PhotoImage(Image.open("Diya More.jpg"))
     diyaMoreButtonLabel=Label(image=diyaMore)
     diyaMoreButtonLabel.image=diyaMore
-    diyaMoreButton=Button(second_frame,image=diyaMore,borderwidth=0,highlightthickness=0)
+    diyaMoreButton=Button(second_frame,image=diyaMore,command=specialConfirmation,borderwidth=0,highlightthickness=0)
     diyaMoreButton.place(x=0,y=138)
     tarunMatthew=ImageTk.PhotoImage(Image.open("Dr. Tarun Matthew.jpg"))
     tarunMatthewButtonLabel=Label(image=tarunMatthew)
     tarunMatthewButtonLabel.image=tarunMatthew
-    tarunMatthewButton=Button(second_frame,image=tarunMatthew,borderwidth=0,highlightthickness=0)
+    tarunMatthewButton=Button(second_frame,image=tarunMatthew,command=specialConfirmation,borderwidth=0,highlightthickness=0)
     tarunMatthewButton.place(x=0,y=323)
     karimLok=ImageTk.PhotoImage(Image.open("Karim Lok.jpg"))
     karimLokButtonLabel=Label(image=karimLok)
     karimLokButtonLabel.image=karimLok
-    karimLokButton=Button(second_frame,image=karimLok,borderwidth=0,highlightthickness=0)
+    karimLokButton=Button(second_frame,image=karimLok,command=specialConfirmation,borderwidth=0,highlightthickness=0)
     karimLokButton.place(x=0,y=510)
     vijayGaneshan=ImageTk.PhotoImage(Image.open("Vijay Ganeshan.jpg"))
     vijayGaneshanButtonLabel=Label(image=vijayGaneshan)
     vijayGaneshanButtonLabel.image=vijayGaneshan
-    vijayGaneshanButton=Button(second_frame,image=vijayGaneshan,borderwidth=0,highlightthickness=0)
+    vijayGaneshanButton=Button(second_frame,image=vijayGaneshan,command=specialConfirmation,borderwidth=0,highlightthickness=0)
     vijayGaneshanButton.place(x=0,y=696)
     ananyaBahri=ImageTk.PhotoImage(Image.open("Ananya Bahri.jpg"))
     ananyaBahriButtonLabel=Label(image=ananyaBahri)
     ananyaBahriButtonLabel.image=ananyaBahri
-    ananyaBahriButton=Button(second_frame,image=ananyaBahri,borderwidth=0,highlightthickness=0)
+    ananyaBahriButton=Button(second_frame,image=ananyaBahri,command=specialConfirmation,borderwidth=0,highlightthickness=0)
     ananyaBahriButton.place(x=0,y=879)
     radhikaRamanathan=ImageTk.PhotoImage(Image.open("Radhika Ramanathan.jpg"))
     radhikaRamanathanButtonLabel=Label(image=radhikaRamanathan)
     radhikaRamanathanButtonLabel.image=radhikaRamanathan
-    radhikaRamanathanButton=Button(second_frame,image=radhikaRamanathan,borderwidth=0,highlightthickness=0)
+    radhikaRamanathanButton=Button(second_frame,image=radhikaRamanathan,command=specialConfirmation,borderwidth=0,highlightthickness=0)
     radhikaRamanathanButton.place(x=0,y=1064)
     diyaMoreButton.bind("<Enter>",button_hover1)
     diyaMoreButton.bind("<Leave>",button_hover_leave1)
@@ -291,8 +354,6 @@ def specialdoctors():
     ananyaBahriButton.bind("<Leave>",button_hover_leave5)
     radhikaRamanathanButton.bind("<Enter>",button_hover6)
     radhikaRamanathanButton.bind("<Leave>",button_hover_leave6)
-    
-
 
 #General Doctors Page
 def generaldoctors():
