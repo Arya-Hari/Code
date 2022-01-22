@@ -254,43 +254,26 @@ def generalDoctorsConfirmation():
         date=generaldoc_pick_a_date()
         doc_price=docprice.split(",")
         doc=doc_price[0]
-        price=int(doc_price[1])
-        if doc=="Dr. Usha Manda":
-            price=2099 + (0.02*2099) + (0.1*2099)
-        elif doc=="Dr. John Varghese":
-            price=2199 + (0.02*2199) + (0.1*2199)
-        elif doc=="Dr. Jasmine Raju":
-            price=2299 + (0.02*2299) + (0.1*2299)
-        else:
-            price=2399 + (0.02*2399) + (0.1*2399)        
-        price="Rs."+str(price)
+        price=int(doc_price[1])               
+        price="Rs."+str(price+(0.02*price)+(0.1*price))
         #Invoice Page Background
         generalDoctorInvoicePgBg=PhotoImage(file="C:\\Users\\User\\Downloads\\GeneralDoctorInvoiceBG.png")
         generalDoctorInvoicePgBgLabel=Label(generalDoctorInvoice,image=generalDoctorInvoicePgBg)
-        generalDoctorInvoicePgBgLabel.place(x=0,y=0,relwidth=1,relheight=1)
-        #User Logo
-        user=PhotoImage(file="C:\\Users\\User\\Downloads\\User Logo.png")
-        userButton=Button(generalDoctorInvoice,image=user,borderwidth=0,highlightthickness=0)
-        userButton.place(x=550,y=5)
-        #Back Button
-        back=PhotoImage(file="C:\\Users\\User\\Downloads\\BackButton.png")
-        backButton=Button(generalDoctorInvoice,image=back,borderwidth=0,highlightthickness=0,command=generalDoctorInvoice.destroy)
-        backButton.place(x=460,y=14)
+        generalDoctorInvoicePgBgLabel.place(x=0,y=0,relwidth=1,relheight=1)        
         #Invoice Info
-        randomInvoiceNumber=random.randint(1,1000)
-        randomInvoiceNumber_label=Label(generalDoctorInvoice,text="#"+str(randomInvoiceNumber),font=("Bahnschrift Condensed",12),bg="black",fg="gold")
-        randomInvoiceNumber_label.place(x=340,y=102)
-        generalDocInvoicePatientName_label=Label(generalDoctorInvoice,text="fullname insert",font=("Bahnschrift Condensed",16),bg="black",fg="yellow",width=25,height=2)
+        randomInvoiceNumber=random.randint(0,10000000)
+        randomInvoiceNumber_label=Label(generalDoctorInvoice,text="INVOICE NO: "+str(randomInvoiceNumber),font=("Bahnschrift Condensed",16),bg="black",fg="gold")
+        randomInvoiceNumber_label.place(x=430,y=12)
+        generalDocInvoicePatientName_label=Label(generalDoctorInvoice,text="fullname insert",font=("Bahnschrift Condensed",16),bg="black",fg="gold",width=25,height=2)
         generalDocInvoicePatientName_label.place(x=350,y=175)
-        generalDocInvoiceDoctor_label=Label(generalDoctorInvoice,text=doc,font=("Bahnschrift Condensed",16),bg="black",fg="yellow",width=25,height=2)
+        generalDocInvoiceDoctor_label=Label(generalDoctorInvoice,text=doc,font=("Bahnschrift Condensed",16),bg="black",fg="gold",width=25,height=2)
         generalDocInvoiceDoctor_label.place(x=350,y=255)        
-        generalDocInvoicePrice_label=Label(generalDoctorInvoice,text=price,font=("Bahnschrift Condensed",16),bg="Black",fg="Yellow",width=25,height=2)
+        generalDocInvoicePrice_label=Label(generalDoctorInvoice,text=price,font=("Bahnschrift Condensed",16),bg="Black",fg="gold",width=25,height=2)
         generalDocInvoicePrice_label.place(x=350,y=335)
-        generalDoctorCalendar_Label=Label(generalDoctorInvoice,text=date,font=("Bahnschrift Condensed",16),bg="Black",fg="Yellow",width=25,height=2)
+        generalDoctorCalendar_Label=Label(generalDoctorInvoice,text=date,font=("Bahnschrift Condensed",16),bg="Black",fg="gold",width=25,height=2)
         generalDoctorCalendar_Label.place(x=350,y=415)
-        #exitButton=Button(generalDoctorInvoice,text="Exit",font=("Bahnschrift Condensed",16),bg="Black",fg="Yellow",borderwidth=0,highlightthickness=0,command=logout)
-        #exitButton.place(x=300,y=480)
-        generalDoctorInvoice.mainloop()
+        exitButton=Button(generalDoctorInvoice,text="Done",font=("Bahnschrift Condensed",16),bg="Black",fg="gold",borderwidth=0,highlightthickness=0,command=logout)
+        exitButton.place(x=300,y=480)        
     def selected():
         global submit
         a=n.get()                     
@@ -299,8 +282,7 @@ def generalDoctorsConfirmation():
         submit_button.place(x=230,y=530)            
     generalDoctorConfirmationPage=Tk()
     generalDoctorConfirmationPage.geometry("600x600")
-    n=StringVar()
-    n.set("Usha Manda")
+    n=StringVar()    
     #General Doctors Confirmation Page Background
     generalDoctorConfirmPgBg=PhotoImage(file="C:\\Users\\User\\Downloads\\GeneralDocConfirmationBG (1).png")
     generalDoctorConfirmPageLabel=Label(generalDoctorConfirmationPage,image=generalDoctorConfirmPgBg)
@@ -323,9 +305,7 @@ def generalDoctorsConfirmation():
     anandRadhakishanConfirm.place(x=301,y=457)
     #Calendar
     generalDoctorCalendar=Calendar(generalDoctorConfirmationPage,selectmode="day",year=2021,month=9,day=15)
-    generalDoctorCalendar.place(x=27,y=280)             
-    generalDoctorConfirmationPage.mainloop()
-generalDoctorsConfirmation()
+    generalDoctorCalendar.place(x=27,y=280)
 
 
 def generaldoctors():
