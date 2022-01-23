@@ -356,22 +356,22 @@ def generaldoctors():
     johnVarghese=ImageTk.PhotoImage(Image.open("John Varghese.jpg"))
     johnVargheseButtonLabel=Label(image=johnVarghese)
     johnVargheseButtonLabel.image=johnVarghese
-    johnVargheseButton=Button(second_frame,image=johnVarghese,borderwidth=0,highlightthickness=0)
+    johnVargheseButton=Button(second_frame,image=johnVarghese,borderwidth=0,highlightthickness=0,command=generalDoctorsConfirmation)
     johnVargheseButton.place(x=0,y=138)
     ushaManda=ImageTk.PhotoImage(Image.open("Usha Manda.jpg"))
     ushaMandaButtonLabel=Label(image=ushaManda)
     ushaMandaButtonLabel.image=ushaManda
-    ushaMandaButton=Button(second_frame,image=ushaManda,borderwidth=0,highlightthickness=0)
+    ushaMandaButton=Button(second_frame,image=ushaManda,borderwidth=0,highlightthickness=0,command=generalDoctorsConfirmation)
     ushaMandaButton.place(x=0,y=323)
     jasminRaju=ImageTk.PhotoImage(Image.open("Jasmin Raju.jpg"))
     jasminRajuButtonLabel=Label(image=jasminRaju)
     jasminRajuButtonLabel.image=jasminRaju
-    jasminRajuButton=Button(second_frame,image=jasminRaju,borderwidth=0,highlightthickness=0)
+    jasminRajuButton=Button(second_frame,image=jasminRaju,borderwidth=0,highlightthickness=0,command=generalDoctorsConfirmation)
     jasminRajuButton.place(x=0,y=510)
     anandRadhakishan=ImageTk.PhotoImage(Image.open("Anand Radhakishan.jpg"))
     anandRadhakishanButtonLabel=Label(image=anandRadhakishan)
     anandRadhakishanButtonLabel.image=anandRadhakishan
-    anandRadhakishanButton=Button(second_frame,image=anandRadhakishan,borderwidth=0,highlightthickness=0)
+    anandRadhakishanButton=Button(second_frame,image=anandRadhakishan,borderwidth=0,highlightthickness=0,command=generalDoctorsConfirmation)
     anandRadhakishanButton.place(x=0,y=696)
     johnVargheseButton.bind("<Enter>",button_hover1)
     johnVargheseButton.bind("<Leave>",button_hover_leave1)
