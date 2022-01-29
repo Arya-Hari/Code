@@ -12,6 +12,67 @@ import random
 def endProject():
     MPage.destroy()
 
+fullName=' '
+def nameForInvoice(firstname,lastname):
+    global a
+    a=firstname
+    global fullName
+    fullName=firstname + ' ' + lastname
+
+def unsubscribe():
+    def endSubscription():
+        connection = mysql.connector.connect(
+                                         database='mindcology',
+                                         user='root',
+                                         password='12ammu34')
+        cursor=connection.cursor()
+        instruction = "DELETE FROM MAILING_LIST WHERE FIRSTNAME =  '%s' " % (a)
+        try:
+            cursor.execute(instruction)
+            connection.commit()
+        except:
+            conn.rollback()
+            messagebox.showinfo('Error','Entry Already Deleted')
+        U1Page=Toplevel(MPage)
+        background=Canvas(U1Page,width=600,height=600)
+        image=ImageTk.PhotoImage(Image.open("Final Unsubscribe Page.jpg"))
+        label1=Label(image=image)
+        label1.image=image
+        background.create_image(0,0,anchor='nw',image=image)
+        background.pack(expand=True,fill=BOTH)
+        U1Page.geometry('600x600')   
+    UPage=Toplevel(MPage)
+    background=Canvas(UPage,width=600,height=600)
+    image=ImageTk.PhotoImage(Image.open("Unsubscribe Page.jpg"))
+    label1=Label(image=image)
+    label1.image=image
+    background.create_image(0,0,anchor='nw',image=image)
+    background.pack(expand=True,fill=BOTH)
+    UPage.geometry('600x600')   
+    back=ImageTk.PhotoImage(Image.open("Back-Button-Logo.jpg"))
+    backButtonLabel=Label(image=back)
+    backButtonLabel.image=back
+    backButton=Button(UPage,image=back,borderwidth=0,highlightthickness=0)
+    backButton.place(x=450,y=15)
+    unsubscribeButton=Button(UPage,text="CONFIRM",font=('Bahnschrift Condensed',18),bg='white',fg='red',command=endSubscription, borderwidth=1,relief="solid")
+    unsubscribeButton.place(x=470,y=395)
+
+#Terms and Conditions Page
+def TandC():
+    TCPage=Toplevel(MPage)
+    background=Canvas(TCPage,width=600,height=600)
+    image=ImageTk.PhotoImage(Image.open("Terms and Conditions Page.jpg"))
+    label1=Label(image=image)
+    label1.image=image
+    background.create_image(0,0,anchor='nw',image=image)
+    background.pack(expand=True,fill=BOTH)
+    TCPage.geometry('600x600')   
+    back=ImageTk.PhotoImage(Image.open("Back-Button-Logo.jpg"))
+    backButtonLabel=Label(image=back)
+    backButtonLabel.image=back
+    backButton=Button(TCPage,image=back,borderwidth=0,highlightthickness=0)
+    backButton.place(x=450,y=15)
+    
 #Logout Page
 def logout():
     LOPage=Toplevel(MPage)
@@ -30,7 +91,7 @@ def logout():
     decisionButton=Button(LOPage,text="YES - CONFIRM LOGOUT",font=('Bahnschrift Condensed',18),bg='white',fg='red',command=endProject, borderwidth=1,relief="solid")
     decisionButton.place(x=270,y=510)
 
-#Workshop Confirmation Page   
+ #Workshop Confirmation Page   
 def workshopConfirmation():
     def workshopInvoice(recievedValue):
         Name=fullName.title()
@@ -40,7 +101,7 @@ def workshopConfirmation():
         date=grab_date()
         listForDate=date.split('/')
         finalDate=listForDate[1]+'-'+listForDate[0]+'-'+listForDate[2]
-        price=(1499*(2/100))+1499+((10/100)*1499)
+        price="₹"+str((1499*(2/100))+1499+((10/100)*1499))
         WIPage=Toplevel(MPage)
         background=Canvas(WIPage,width=600,height=600)
         image=ImageTk.PhotoImage(Image.open("Invoice Page.jpg"))
@@ -70,13 +131,13 @@ def workshopConfirmation():
         submitButton.place(x=230,y=620)
     WCPage=Toplevel(MPage)
     background=Canvas(WCPage,width=600,height=700)
-    image=ImageTk.PhotoImage(Image.open("Workshop Confirmation Page.jpg"))
+    image=ImageTk.PhotoImage(Image.open("Confirmation Page.jpg"))
     label1=Label(image=image)
     label1.image=image
     background.create_image(0,0,anchor='nw',image=image)
     background.pack(expand=True,fill=BOTH)
     WCPage.geometry('600x700')
-    cal=Calendar(WCPage,selectmode="day",year=2021,month=8,day=22)
+    cal=Calendar(WCPage,selectmode="day",year=2022,month=1,day=22)
     cal.place(x=25,y=310)
     var=tk.StringVar()
     ade=Radiobutton(WCPage,text='Addiction Extinction - Rs1499/session',font=('Bahnschrift Condensed',14),variable=var,value='Addiction Extinction',command=selected,tristatevalue=0,bg="black",fg="gold")
@@ -92,10 +153,6 @@ def workshopConfirmation():
     ada=Radiobutton(WCPage,text='Adios Addiction - Rs1499/session',font=('Bahnschrift Condensed',14),variable=var,value='Adios Addiction',command=selected,tristatevalue=0,bg="black",fg="gold")
     ada.place(x=307,y=530)
 
-fullName=' '
-def nameForInvoice(firstname,lastname):
-    global fullName
-    fullName=firstname + ' ' + lastname
     
 #Workshop Page
 def workshop():
@@ -117,6 +174,15 @@ def workshop():
     background.create_image(0,0,anchor='nw',image=image)
     background.pack(expand=True,fill=BOTH)
     WPage.geometry('600x1000')
+    def item_selected(event):
+        selected_index = userOptions.curselection()
+        for i in selected_index:
+            if userOptions.get(i)=='Unsubscribe':
+                unsubscribe()
+            if userOptions.get(i)=='Logout':
+                logout()
+            if userOptions.get(i)=='T & C':
+                TandC()
     def button_hover1(a):
         addictionExtinctionButton["borderwidth"]=1
     def button_hover_leave1(b):
@@ -141,6 +207,20 @@ def workshop():
         feelingAndHealingButton["borderwidth"]=1
     def button_hover_leave6(b):
         feelingAndHealingButton["borderwidth"]=0
+    def button_hover7(a):
+        global  userOptions
+        options= ('Unsubscribe','T & C','Logout')
+        options_var = tk.StringVar(value=options)
+        userOptions= tk.Listbox(second_frame,listvariable=options_var,height=3,selectmode='browse')
+        userOptions.place(x=450,y=50)
+        userOptions.bind('<<ListboxSelect>>',item_selected)
+    def button_hover_leave7(b):
+        def button_hover8(a):
+            userOptions['borderwidth']=1
+        def button_hover_leave8(b):
+            userOptions.destroy()
+        userOptions.bind("<Enter>",button_hover8)
+        userOptions.bind("<Leave>",button_hover_leave8)
     back=ImageTk.PhotoImage(Image.open("Back-Button-Logo.jpg"))
     backButtonLabel=Label(image=back)
     backButtonLabel.image=back
@@ -193,6 +273,8 @@ def workshop():
     adiosAddictionButton.bind("<Leave>",button_hover_leave5)
     feelingAndHealingButton.bind("<Enter>",button_hover6)
     feelingAndHealingButton.bind("<Leave>",button_hover_leave6)
+    userButton.bind("<Enter>",button_hover7)
+    userButton.bind("<Leave>",button_hover_leave7)
 
 #Special Doctors Confirmation Page
 def specialConfirmation():
@@ -278,6 +360,15 @@ def specialdoctors():
     background.create_image(0,0,anchor='nw',image=image)
     background.pack(expand=True,fill=BOTH)
     SDPage.geometry('600x1000')
+    def item_selected(event):
+        selected_index = userOptions.curselection()
+        for i in selected_index:
+            if userOptions.get(i)=='Unsubscribe':
+                unsubscribe()
+            if userOptions.get(i)=='Logout':
+                logout()
+            if userOptions.get(i)=='T & C':
+                TandC()
     def button_hover1(a):
         diyaMoreButton["borderwidth"]=1
     def button_hover_leave1(b):
@@ -302,6 +393,20 @@ def specialdoctors():
         radhikaRamanathanButton["borderwidth"]=1
     def button_hover_leave6(b):
         radhikaRamanathanButton["borderwidth"]=0
+    def button_hover7(a):
+        global  userOptions
+        options= ('Unsubscribe','T & C','Logout')
+        options_var = tk.StringVar(value=options)
+        userOptions= tk.Listbox(second_frame,listvariable=options_var,height=3,selectmode='browse')
+        userOptions.place(x=450,y=50)
+        userOptions.bind('<<ListboxSelect>>',item_selected)
+    def button_hover_leave7(b):
+        def button_hover8(a):
+            userOptions['borderwidth']=1
+        def button_hover_leave8(b):
+            userOptions.destroy()
+        userOptions.bind("<Enter>",button_hover8)
+        userOptions.bind("<Leave>",button_hover_leave8)
     back=ImageTk.PhotoImage(Image.open("Back-Button-Logo.jpg"))
     backButtonLabel=Label(image=back)
     backButtonLabel.image=back
@@ -354,6 +459,68 @@ def specialdoctors():
     ananyaBahriButton.bind("<Leave>",button_hover_leave5)
     radhikaRamanathanButton.bind("<Enter>",button_hover6)
     radhikaRamanathanButton.bind("<Leave>",button_hover_leave6)
+    userButton.bind("<Enter>",button_hover7)
+    userButton.bind("<Leave>",button_hover_leave7)
+
+#General Doctors Confirmation Page
+def generalDoctorsConfirmation():
+    def generalDoctorsInvoice(recievedValue):
+        Name=fullName.title()
+        a=recievedValue.split(", ₹")
+        cost=int(a[1])
+        def grab_date():
+            date=cal.get_date()
+            return date
+        date=grab_date()
+        listForDate=date.split('/')
+        finalDate=listForDate[1]+'-'+listForDate[0]+'-'+listForDate[2]
+        price="₹"+str((cost*(2/100))+cost+((10/100)*cost))
+        GDIPage=Toplevel(MPage)
+        background=Canvas(GDIPage,width=600,height=600)
+        image=ImageTk.PhotoImage(Image.open("Invoice Page.jpg"))
+        label1=Label(image=image)
+        label1.image=image
+        background.create_image(0,0,anchor='nw',image=image)
+        background.pack(expand=True,fill=BOTH)
+        GDIPage.geometry('600x600')
+        nameLabel=Label(GDIPage, text=Name,width=21,font=('Bahnschrift Condensed',20),bg='black',fg='gold')
+        nameLabel.place(x=305,y=180)
+        specialLabel=Label(GDIPage,text=recievedValue,width=21,font=('Bahnschrift Condensed',20),bg='black',fg='gold')
+        specialLabel.place(x=305,y=262)
+        priceLabel=Label(GDIPage,text=price,width=21,font=('Bahnschrift Condensed',20),bg='black',fg='gold')
+        priceLabel.place(x=305,y=342)
+        dateLabel=Label(GDIPage,text=finalDate,font=('Bahnschrift Condensed',22),bg='black',fg='gold')
+        dateLabel.place(x=375,y=424)
+        done=Button(GDIPage, text="Done",font=('Bahnschrift Condensed',18),bg='black',fg='gold',command=logout)
+        done.place(x=265, y=480)
+        invoiceNumber=Label(GDIPage,text='Invoice No. : '+str(random.randint(0,10000000)),font=('Bahnschrift Condensed',16),bg='black',fg='gold')
+        invoiceNumber.place(x=420, y=20)
+    def selected():
+        a=var.get()
+        submit=ImageTk.PhotoImage(Image.open("Submit Button.jpg"))
+        submitButtonLabel=Label(image=submit)
+        submitButtonLabel.image=submit
+        submitButton=Button(GDCPage,image=submit,borderwidth=0,highlightthickness=0,command=partial(generalDoctorsInvoice,a))
+        submitButton.place(x=230,y=620)
+    GDCPage=Toplevel(MPage)
+    background=Canvas(GDCPage,width=600,height=700)
+    image=ImageTk.PhotoImage(Image.open("Confirmation Page.jpg"))
+    label1=Label(image=image)
+    label1.image=image
+    background.create_image(0,0,anchor='nw',image=image)
+    background.pack(expand=True,fill=BOTH)
+    GDCPage.geometry('600x700')
+    cal=Calendar(GDCPage,selectmode="day",year=2022,month=8,day=22)
+    cal.place(x=25,y=310)
+    var=tk.StringVar()
+    um=Radiobutton(GDCPage,text='Usha Manda-Rs2099/session',font=('Bahnschrift Condensed',16),variable=var,value='Usha Manda, ₹2199',command=selected,tristatevalue=0,bg="black",fg="gold")
+    um.place(x=315,y=280)
+    jv=Radiobutton(GDCPage,text='John Varghese-Rs2199/session',font=('Bahnschrift Condensed',16),variable=var,value='John Varghese, ₹2499',command=selected,tristatevalue=0,bg="black",fg="gold")
+    jv.place(x=315,y=330)
+    jr=Radiobutton(GDCPage,text='Jasmine Raju-Rs2299/session',font=('Bahnschrift Condensed',16),variable=var,value='Jasmine Raju, ₹2299',command=selected,tristatevalue=0,bg="black",fg="gold")
+    jr.place(x=315,y=380)
+    ar=Radiobutton(GDCPage,text='Anand Radhakrishnan-Rs2399/session',font=('Bahnschrift Condensed',16),variable=var,value='Anand R, ₹2399',command=selected,tristatevalue=0,bg="black",fg="gold")
+    ar.place(x=302,y=430)
 
 #General Doctors Page
 def generaldoctors():
@@ -375,6 +542,15 @@ def generaldoctors():
     background.create_image(0,0,anchor='nw',image=image)
     background.pack(expand=True,fill=BOTH)
     GDPage.geometry('600x1000')
+    def item_selected(event):
+        selected_index = userOptions.curselection()
+        for i in selected_index:
+            if userOptions.get(i)=='Unsubscribe':
+                unsubscribe()
+            if userOptions.get(i)=='Logout':
+                logout()
+            if userOptions.get(i)=='T & C':
+                TandC()
     def button_hover1(a):
         johnVargheseButton["borderwidth"]=1
     def button_hover_leave1(b):
@@ -391,6 +567,20 @@ def generaldoctors():
         anandRadhakishanButton["borderwidth"]=1
     def button_hover_leave4(b):
         anandRadhakishanButton["borderwidth"]=0
+    def button_hover7(a):
+        global  userOptions
+        options= ('Unsubscribe','T & C','Logout')
+        options_var = tk.StringVar(value=options)
+        userOptions= tk.Listbox(second_frame,listvariable=options_var,height=3,selectmode='browse')
+        userOptions.place(x=450,y=50)
+        userOptions.bind('<<ListboxSelect>>',item_selected)
+    def button_hover_leave7(b):
+        def button_hover8(a):
+            userOptions['borderwidth']=1
+        def button_hover_leave8(b):
+            userOptions.destroy()
+        userOptions.bind("<Enter>",button_hover8)
+        userOptions.bind("<Leave>",button_hover_leave8)
     back=ImageTk.PhotoImage(Image.open("Back-Button-Logo.jpg"))
     backButtonLabel=Label(image=back)
     backButtonLabel.image=back
@@ -404,22 +594,22 @@ def generaldoctors():
     johnVarghese=ImageTk.PhotoImage(Image.open("John Varghese.jpg"))
     johnVargheseButtonLabel=Label(image=johnVarghese)
     johnVargheseButtonLabel.image=johnVarghese
-    johnVargheseButton=Button(second_frame,image=johnVarghese,borderwidth=0,highlightthickness=0)
+    johnVargheseButton=Button(second_frame,image=johnVarghese,borderwidth=0,highlightthickness=0,command=generalDoctorsConfirmation)
     johnVargheseButton.place(x=0,y=138)
     ushaManda=ImageTk.PhotoImage(Image.open("Usha Manda.jpg"))
     ushaMandaButtonLabel=Label(image=ushaManda)
     ushaMandaButtonLabel.image=ushaManda
-    ushaMandaButton=Button(second_frame,image=ushaManda,borderwidth=0,highlightthickness=0)
+    ushaMandaButton=Button(second_frame,image=ushaManda,borderwidth=0,highlightthickness=0,command=generalDoctorsConfirmation)
     ushaMandaButton.place(x=0,y=323)
     jasminRaju=ImageTk.PhotoImage(Image.open("Jasmin Raju.jpg"))
     jasminRajuButtonLabel=Label(image=jasminRaju)
     jasminRajuButtonLabel.image=jasminRaju
-    jasminRajuButton=Button(second_frame,image=jasminRaju,borderwidth=0,highlightthickness=0)
+    jasminRajuButton=Button(second_frame,image=jasminRaju,borderwidth=0,highlightthickness=0,command=generalDoctorsConfirmation)
     jasminRajuButton.place(x=0,y=510)
     anandRadhakishan=ImageTk.PhotoImage(Image.open("Anand Radhakishan.jpg"))
     anandRadhakishanButtonLabel=Label(image=anandRadhakishan)
     anandRadhakishanButtonLabel.image=anandRadhakishan
-    anandRadhakishanButton=Button(second_frame,image=anandRadhakishan,borderwidth=0,highlightthickness=0)
+    anandRadhakishanButton=Button(second_frame,image=anandRadhakishan,borderwidth=0,highlightthickness=0,command=generalDoctorsConfirmation)
     anandRadhakishanButton.place(x=0,y=696)
     johnVargheseButton.bind("<Enter>",button_hover1)
     johnVargheseButton.bind("<Leave>",button_hover_leave1)
@@ -429,6 +619,8 @@ def generaldoctors():
     jasminRajuButton.bind("<Leave>",button_hover_leave3)
     anandRadhakishanButton.bind("<Enter>",button_hover4)
     anandRadhakishanButton.bind("<Leave>",button_hover_leave4)
+    userButton.bind("<Enter>",button_hover7)
+    userButton.bind("<Leave>",button_hover_leave7)
 
 #Available Services Page
 def services():
@@ -440,6 +632,15 @@ def services():
     background.create_image(0,0,anchor='nw',image=image)
     background.pack(expand=True,fill=BOTH)
     SPage.geometry('600x600')
+    def item_selected(event):
+        selected_index = userOptions.curselection()
+        for i in selected_index:
+            if userOptions.get(i)=='Unsubscribe':
+                unsubscribe()
+            if userOptions.get(i)=='Logout':
+                logout()
+            if userOptions.get(i)=='T & C':
+                TandC()
     def button_hover1(a):
         generalDoctorsButton["borderwidth"]=1
     def button_hover_leave1(b):
@@ -452,6 +653,20 @@ def services():
        workshopsButton["borderwidth"]=1
     def button_hover_leave3(b):
         workshopsButton["borderwidth"]=0
+    def button_hover7(a):
+        global  userOptions
+        options= ('Unsubscribe','T & C','Logout')
+        options_var = tk.StringVar(value=options)
+        userOptions= tk.Listbox(SPage,listvariable=options_var,height=3,selectmode='browse')
+        userOptions.place(x=450,y=50)
+        userOptions.bind('<<ListboxSelect>>',item_selected)
+    def button_hover_leave7(b):
+        def button_hover8(a):
+            userOptions['borderwidth']=1
+        def button_hover_leave8(b):
+            userOptions.destroy()
+        userOptions.bind("<Enter>",button_hover8)
+        userOptions.bind("<Leave>",button_hover_leave8)
     back=ImageTk.PhotoImage(Image.open("Back-Button-Logo.jpg"))
     backButtonLabel=Label(image=back)
     backButton=Button(SPage,image=back,borderwidth=0,highlightthickness=0)
@@ -483,6 +698,8 @@ def services():
     specialDoctorsButton.bind("<Leave>",button_hover_leave2)
     workshopsButton.bind("<Enter>",button_hover3)
     workshopsButton.bind("<Leave>",button_hover_leave3)
+    userButton.bind("<Enter>",button_hover7)
+    userButton.bind("<Leave>",button_hover_leave7)
 
 #About Us Page
 def aboutUs():
@@ -499,11 +716,36 @@ def aboutUs():
     backButtonLabel.image=back
     backButton=Button(AUPage,image=back,borderwidth=0,highlightthickness=0)
     backButton.place(x=450,y=15)
+    def item_selected(event):
+        selected_index = userOptions.curselection()
+        for i in selected_index:
+            if userOptions.get(i)=='Unsubscribe':
+                unsubscribe()
+            if userOptions.get(i)=='Logout':
+                logout()
+            if userOptions.get(i)=='T & C':
+                TandC()
+    def button_hover7(a):
+        global  userOptions
+        options= ('Unsubscribe','T & C','Logout')
+        options_var = tk.StringVar(value=options)
+        userOptions= tk.Listbox(AUPage,listvariable=options_var,height=3,selectmode='browse')
+        userOptions.place(x=450,y=50)
+        userOptions.bind('<<ListboxSelect>>',item_selected)
+    def button_hover_leave7(b):
+        def button_hover8(a):
+            userOptions['borderwidth']=1
+        def button_hover_leave8(b):
+            userOptions.destroy()
+        userOptions.bind("<Enter>",button_hover8)
+        userOptions.bind("<Leave>",button_hover_leave8)
     user=ImageTk.PhotoImage(Image.open("User Logo.jpg"))
     userButtonLabel=Label(image=user)
     userButtonLabel.image=user
     userButton=Button(AUPage,image=user,borderwidth=0,highlightthickness=0)
     userButton.place(x=550,y=8)
+    userButton.bind("<Enter>",button_hover7)
+    userButton.bind("<Leave>",button_hover_leave7)
 
 #Welcome Page
 def welcome():
@@ -520,6 +762,29 @@ def welcome():
     backButtonLabel.image=back
     backButton=Button(WPage,image=back,borderwidth=0,highlightthickness=0)
     backButton.place(x=450,y=15)
+    def item_selected(event):
+        selected_index = userOptions.curselection()
+        for i in selected_index:
+            if userOptions.get(i)=='Unsubscribe':
+                unsubscribe()
+            if userOptions.get(i)=='Logout':
+                logout()
+            if userOptions.get(i)=='T & C':
+                TandC()
+    def button_hover7(a):
+        global  userOptions
+        options= ('Unsubscribe','T & C','Logout')
+        options_var = tk.StringVar(value=options)
+        userOptions= tk.Listbox(WPage,listvariable=options_var,height=3,selectmode='browse')
+        userOptions.place(x=450,y=50)
+        userOptions.bind('<<ListboxSelect>>',item_selected)
+    def button_hover_leave7(b):
+        def button_hover8(a):
+            userOptions['borderwidth']=1
+        def button_hover_leave8(b):
+            userOptions.destroy()
+        userOptions.bind("<Enter>",button_hover8)
+        userOptions.bind("<Leave>",button_hover_leave8)
     user=ImageTk.PhotoImage(Image.open("User Logo.jpg"))
     userButtonLabel=Label(image=user)
     userButtonLabel.image=user
@@ -529,6 +794,8 @@ def welcome():
     continueButton.place(x=240,y=400)
     aboutUsButton=Button(WPage,text='ABOUT US',font=('Bahnschrift Condensed',15),bg='black',fg='gold',borderwidth=0,command=aboutUs)
     aboutUsButton.place(x=50,y=530)
+    userButton.bind("<Enter>",button_hover7)
+    userButton.bind("<Leave>",button_hover_leave7)
 
 #Register Page
 def register():
@@ -580,6 +847,25 @@ def register():
     backButtonLabel.image=back
     backButton=Button(RPage,image=back,borderwidth=0,highlightthickness=0)
     backButton.place(x=450,y=15)
+    def item_selected(event):
+        selected_index = userOptions.curselection()
+        for i in selected_index:
+            if userOptions.get(i)=='T & C':
+                TandC()
+    def button_hover7(a):
+        global  userOptions
+        options= ('T & C')
+        options_var = tk.StringVar(value=options)
+        userOptions= tk.Listbox(RPage,listvariable=options_var,height=3,selectmode='browse')
+        userOptions.place(x=450,y=50)
+        userOptions.bind('<<ListboxSelect>>',item_selected)
+    def button_hover_leave7(b):
+        def button_hover8(a):
+            userOptions['borderwidth']=1
+        def button_hover_leave8(b):
+            userOptions.destroy()
+        userOptions.bind("<Enter>",button_hover8)
+        userOptions.bind("<Leave>",button_hover_leave8)
     user=ImageTk.PhotoImage(Image.open("User Logo.jpg"))
     userButtonLabel=Label(image=user)
     userButtonLabel.image=user
@@ -605,9 +891,8 @@ def register():
     submitButtonLabel.image=submit
     submitButton=Button(RPage,image=submit,borderwidth=0,highlightthickness=0,command=enter)
     submitButton.place(x=235,y=511)
-    v=IntVar()
-    Allowance=Checkbutton(RPage,text ='By checking this, you agree to our Terms and Conditions and shall be added to our Mailing List',font=('Bahnschrift Condensed',12),bg='white',fg='black',variable=v)
-    Allowance.place(x=10,y=570)
+    userButton.bind("<Enter>",button_hover7)
+    userButton.bind("<Leave>",button_hover_leave7)
 
 #Login Page
 def login():
@@ -619,7 +904,6 @@ def login():
                                          database='mindcology',
                                          user='root',
                                          password='12ammu34')
-
         sql_select_Query = "select * from userinfo"
         cursor = connection.cursor()
         cursor.execute(sql_select_Query)
@@ -650,6 +934,29 @@ def login():
     backButtonLabel.image=back
     backButton=Button(LPage,image=back,borderwidth=0,highlightthickness=0)
     backButton.place(x=450,y=15)
+    def item_selected(event):
+        selected_index = userOptions.curselection()
+        for i in selected_index:
+            if userOptions.get(i)=='Unsubscribe':
+                unsubscribe()
+            if userOptions.get(i)=='Logout':
+                logout()
+            if userOptions.get(i)=='T & C':
+                TandC()
+    def button_hover7(a):
+        global  userOptions
+        options= ('Unsubscribe','T & C','Logout')
+        options_var = tk.StringVar(value=options)
+        userOptions= tk.Listbox(LPage,listvariable=options_var,height=3,selectmode='browse',relief='solid')
+        userOptions.place(x=450,y=50)
+        userOptions.bind('<<ListboxSelect>>',item_selected)
+    def button_hover_leave7(b):
+        def button_hover8(a):
+            userOptions['borderwidth']=1
+        def button_hover_leave8(b):
+            userOptions.destroy()
+        userOptions.bind("<Enter>",button_hover8)
+        userOptions.bind("<Leave>",button_hover_leave8)
     user=ImageTk.PhotoImage(Image.open("User Logo.jpg"))
     userButtonLabel=Label(image=user)
     userButtonLabel.image=user
@@ -666,6 +973,8 @@ def login():
     submitButtonLabel.image=submit
     submitButton=Button(LPage,image=submit,borderwidth=0,highlightthickness=0,command=entry)
     submitButton.place(x=235,y=470)
+    userButton.bind("<Enter>",button_hover7)
+    userButton.bind("<Leave>",button_hover_leave7)
 
 #Main Page
 MPage=tk.Tk()
