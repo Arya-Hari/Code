@@ -49,11 +49,6 @@ def unsubscribe():
     background.create_image(0,0,anchor='nw',image=image)
     background.pack(expand=True,fill=BOTH)
     UPage.geometry('600x600')   
-    back=ImageTk.PhotoImage(Image.open("Back-Button-Logo.jpg"))
-    backButtonLabel=Label(image=back)
-    backButtonLabel.image=back
-    backButton=Button(UPage,image=back,borderwidth=0,highlightthickness=0)
-    backButton.place(x=450,y=15)
     unsubscribeButton=Button(UPage,text="CONFIRM",font=('Bahnschrift Condensed',18),bg='white',fg='red',command=endSubscription, borderwidth=1,relief="solid")
     unsubscribeButton.place(x=470,y=395)
 
@@ -67,11 +62,6 @@ def TandC():
     background.create_image(0,0,anchor='nw',image=image)
     background.pack(expand=True,fill=BOTH)
     TCPage.geometry('600x600')   
-    back=ImageTk.PhotoImage(Image.open("Back-Button-Logo.jpg"))
-    backButtonLabel=Label(image=back)
-    backButtonLabel.image=back
-    backButton=Button(TCPage,image=back,borderwidth=0,highlightthickness=0)
-    backButton.place(x=450,y=15)
     
 #Logout Page
 def logout():
@@ -83,11 +73,6 @@ def logout():
     background.create_image(0,0,anchor='nw',image=image)
     background.pack(expand=True,fill=BOTH)
     LOPage.geometry('600x600')
-    back=ImageTk.PhotoImage(Image.open("Back-Button-Logo.jpg"))
-    backButtonLabel=Label(image=back)
-    backButtonLabel.image=back
-    backButton=Button(LOPage,image=back,borderwidth=0,highlightthickness=0)
-    backButton.place(x=450,y=15)
     decisionButton=Button(LOPage,text="YES - CONFIRM LOGOUT",font=('Bahnschrift Condensed',18),bg='white',fg='red',command=endProject, borderwidth=1,relief="solid")
     decisionButton.place(x=270,y=510)
 
@@ -224,7 +209,7 @@ def workshop():
     back=ImageTk.PhotoImage(Image.open("Back-Button-Logo.jpg"))
     backButtonLabel=Label(image=back)
     backButtonLabel.image=back
-    backButton=Button(second_frame,image=back,borderwidth=0,highlightthickness=0)
+    backButton=Button(second_frame,image=back,borderwidth=0,highlightthickness=0,command=services)
     backButton.place(x=450,y=20)
     user=ImageTk.PhotoImage(Image.open("User Logo.jpg"))
     userButtonLabel=Label(image=user)
@@ -410,7 +395,7 @@ def specialdoctors():
     back=ImageTk.PhotoImage(Image.open("Back-Button-Logo.jpg"))
     backButtonLabel=Label(image=back)
     backButtonLabel.image=back
-    backButton=Button(second_frame,image=back,borderwidth=0,highlightthickness=0)
+    backButton=Button(second_frame,image=back,borderwidth=0,highlightthickness=0,command=services)
     backButton.place(x=450,y=20)
     user=ImageTk.PhotoImage(Image.open("User Logo.jpg"))
     userButtonLabel=Label(image=user)
@@ -584,7 +569,7 @@ def generaldoctors():
     back=ImageTk.PhotoImage(Image.open("Back-Button-Logo.jpg"))
     backButtonLabel=Label(image=back)
     backButtonLabel.image=back
-    backButton=Button(second_frame,image=back,borderwidth=0,highlightthickness=0)
+    backButton=Button(second_frame,image=back,borderwidth=0,highlightthickness=0,command=services)
     backButton.place(x=450,y=20)
     user=ImageTk.PhotoImage(Image.open("User Logo.jpg"))
     userButtonLabel=Label(image=user)
@@ -669,7 +654,7 @@ def services():
         userOptions.bind("<Leave>",button_hover_leave8)
     back=ImageTk.PhotoImage(Image.open("Back-Button-Logo.jpg"))
     backButtonLabel=Label(image=back)
-    backButton=Button(SPage,image=back,borderwidth=0,highlightthickness=0)
+    backButton=Button(SPage,image=back,borderwidth=0,highlightthickness=0,command=welcome)
     backButton.place(x=450,y=20)
     backButtonLabel.image=back
     user=ImageTk.PhotoImage(Image.open("User Logo.jpg"))
@@ -714,7 +699,7 @@ def aboutUs():
     back=ImageTk.PhotoImage(Image.open("Back-Button-Logo.jpg"))
     backButtonLabel=Label(image=back)
     backButtonLabel.image=back
-    backButton=Button(AUPage,image=back,borderwidth=0,highlightthickness=0)
+    backButton=Button(AUPage,image=back,borderwidth=0,highlightthickness=0,command=welcome)
     backButton.place(x=450,y=15)
     def item_selected(event):
         selected_index = userOptions.curselection()
@@ -757,11 +742,6 @@ def welcome():
     background.create_image(0,0,anchor='nw',image=image)
     background.pack(expand=True,fill=BOTH)
     WPage.geometry('600x600')
-    back=ImageTk.PhotoImage(Image.open("Back-Button-Logo.jpg"))
-    backButtonLabel=Label(image=back)
-    backButtonLabel.image=back
-    backButton=Button(WPage,image=back,borderwidth=0,highlightthickness=0)
-    backButton.place(x=450,y=15)
     def item_selected(event):
         selected_index = userOptions.curselection()
         for i in selected_index:
@@ -842,11 +822,6 @@ def register():
     background.create_image(0,0,anchor='nw',image=image)
     background.pack(expand=True,fill=BOTH)
     RPage.geometry('600x600')
-    back=ImageTk.PhotoImage(Image.open("Back-Button-Logo.jpg"))
-    backButtonLabel=Label(image=back)
-    backButtonLabel.image=back
-    backButton=Button(RPage,image=back,borderwidth=0,highlightthickness=0)
-    backButton.place(x=450,y=15)
     def item_selected(event):
         selected_index = userOptions.curselection()
         for i in selected_index:
@@ -929,11 +904,6 @@ def login():
     background.create_image(0,0,anchor='nw',image=image)
     background.pack(expand=True,fill=BOTH)
     LPage.geometry('600x600')
-    back=ImageTk.PhotoImage(Image.open("Back-Button-Logo.jpg"))
-    backButtonLabel=Label(image=back)
-    backButtonLabel.image=back
-    backButton=Button(LPage,image=back,borderwidth=0,highlightthickness=0)
-    backButton.place(x=450,y=15)
     def item_selected(event):
         selected_index = userOptions.curselection()
         for i in selected_index:
