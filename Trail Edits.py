@@ -19,6 +19,7 @@ def nameForInvoice(firstname,lastname):
     global fullName
     fullName=firstname + ' ' + lastname
 
+#Unsubscribe Page
 def unsubscribe():
     def endSubscription():
         connection = mysql.connector.connect(
